@@ -12,10 +12,18 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
+    @IBOutlet weak var statusMenu: NSMenu!
+    
+    let rootItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
+    @IBAction func quit(_ sender: NSMenuItem) {
+        let app = NSApplication.shared
+        app.terminate(self)
+    }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        rootItem.title = "Pomodoro Timer"
+        rootItem.menu = statusMenu
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
