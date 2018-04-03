@@ -3,5 +3,5 @@ language: objective-c
 
 script:
     - xcodebuild clean
-    - xcodebuild test -scheme Timer
+    - xcodebuild test -scheme Timer -only-testing:TimerTests
 
