@@ -9,12 +9,12 @@ class PomodoroTimer {
     private var secondsTillNextStage: Int
     private(set) var stage: Stage
     
-    let MINUTES = 1
+    let MINUTES = 60
     
     init() {
         begin = Date.init()
         stage = Stage.Work
-        secondsTillNextStage = 10 * MINUTES
+        secondsTillNextStage = 25 * MINUTES
     }
     
     func update(date: Date) -> Stage {
@@ -28,7 +28,7 @@ class PomodoroTimer {
                 secondsTillNextStage = 5 * MINUTES
             case .ShortBreak, .LongBreak:
                 stage = .Work
-                secondsTillNextStage = 10 * MINUTES
+                secondsTillNextStage = 25 * MINUTES
             }
         }
         return stage
