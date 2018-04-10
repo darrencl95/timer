@@ -1,15 +1,15 @@
 import Foundation
 
 class PomodoroTimer {
-    enum Stage {
-        case Work, ShortBreak, LongBreak
+    enum Stage: TimeInterval {
+        case Work = 25.0, ShortBreak = 5.0, LongBreak = 15.0
     }
 
     private var begin: Date
-    private var secondsTillNextStage: Int
+    private var secondsTillNextStage: Double
     private(set) var stage: Stage
     
-    let MINUTES = 60
+    let MINUTES = 60.0
     
     init() {
         begin = Date.init()
@@ -17,18 +17,22 @@ class PomodoroTimer {
         secondsTillNextStage = 25 * MINUTES
     }
     
+    func switchTo(stage: Stage, begin: Date) {
+        self.stage = stage
+        self.secondsTillNextStage = stage.rawValue * MINUTES
+        self.begin = begin
+    }
+    
     func update(date: Date) -> Stage {
         let interval = date.timeIntervalSince(begin)
-        if (Int(interval) > secondsTillNextStage) {
-            begin = Date.init()
+        if (interval > secondsTillNextStage) {
+            let now = Date.init()
 
             switch stage {
             case .Work:
-                stage = .ShortBreak
-                secondsTillNextStage = 5 * MINUTES
+                switchTo(stage: Stage.ShortBreak, begin: now)
             case .ShortBreak, .LongBreak:
-                stage = .Work
-                secondsTillNextStage = 25 * MINUTES
+                switchTo(stage: Stage.Work, begin: now)
             }
         }
         return stage
@@ -36,6 +40,6 @@ class PomodoroTimer {
     
     func countDownTillNextStage(date: Date) -> Int {
         let interval = date.timeIntervalSince(begin)
-        return secondsTillNextStage - Int(interval)
+        return Int(floor(secondsTillNextStage - interval))
     }
 }
