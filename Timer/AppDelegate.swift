@@ -24,8 +24,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.timer = nil
         self.pomodoroTimer = PomodoroTimer.init()
         
-        let date = Date.init().addingTimeInterval(-(5 * 60 - 5))
-        pomodoroTimer.switchTo(stage: PomodoroTimer.Stage.ShortBreak, begin: date)
+        let fewMinutesAgo = Date.init().addingTimeInterval(-(10 * 60))
+        pomodoroTimer.switchTo(PomodoroTimer.Stage.Work, since: fewMinutesAgo)
 
         super.init()
     }

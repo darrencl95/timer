@@ -5,41 +5,41 @@ class PomodoroTimer {
         case Work = 25.0, ShortBreak = 5.0, LongBreak = 15.0
     }
 
-    private var begin: Date
+    private(set) var since: Date
     private var secondsTillNextStage: Double
     private(set) var stage: Stage
     
     let MINUTES = 60.0
     
     init() {
-        begin = Date.init()
+        since = Date.init()
         stage = Stage.Work
         secondsTillNextStage = 25 * MINUTES
     }
     
-    func switchTo(stage: Stage, begin: Date) {
+    func switchTo(_ stage: Stage, since: Date) {
         self.stage = stage
         self.secondsTillNextStage = stage.rawValue * MINUTES
-        self.begin = begin
+        self.since = since
     }
     
     func update(date: Date) -> Stage {
-        let interval = date.timeIntervalSince(begin)
+        let interval = date.timeIntervalSince(since)
         if (interval > secondsTillNextStage) {
             let now = Date.init()
 
             switch stage {
             case .Work:
-                switchTo(stage: Stage.ShortBreak, begin: now)
+                switchTo(Stage.ShortBreak, since: now)
             case .ShortBreak, .LongBreak:
-                switchTo(stage: Stage.Work, begin: now)
+                switchTo(Stage.Work, since: now)
             }
         }
         return stage
     }
     
     func countDownTillNextStage(date: Date) -> Int {
-        let interval = date.timeIntervalSince(begin)
+        let interval = date.timeIntervalSince(since)
         return Int(floor(secondsTillNextStage - interval))
     }
 }
