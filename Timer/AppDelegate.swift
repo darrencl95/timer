@@ -8,6 +8,14 @@
 
 import Cocoa
 
+extension NSImage {
+    func lockFocus(closure: () -> Void) {
+        self.lockFocus()
+        closure()
+        self.unlockFocus()
+    }
+}
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -42,18 +50,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return str
     }
     
-    func makeClockImage() -> NSImage {
-        let width = NSFont.systemFontSize
-        let height = NSFont.systemFontSize
+    func makeClockImage(height: CGFloat, progress: Double) -> NSImage {
+        let width = height
 
         let image = NSImage.init(size: NSMakeSize(width * 1.2, height))
-        image.lockFocus()
+        image.lockFocus {
+            NSColor.textColor.set()
+            
+            let path = NSBezierPath.init()
+            let center = NSMakePoint(width/2, height/2)
+            
+            let end = CGFloat(90.0 + 360.0 * progress)
         
-        let path = NSBezierPath.init(ovalIn: NSMakeRect(0, 0, width, height))
-        NSColor.black.set()
-        path.stroke()
-        
-        image.unlockFocus()
+            path.move(to: center)
+            path.appendArc(withCenter: center,
+                           radius: width * 0.4, startAngle: 90, endAngle: end, clockwise: true)
+            path.line(to: center)
+            path.fill()
+
+            path.move(to: center)
+            path.appendArc(withCenter: center, radius: width * 0.4, startAngle: 0, endAngle: 360)
+            path.lineWidth = 2
+            path.stroke()
+        }
         
         return image
     }
@@ -68,10 +87,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let title = String.init(format: "%02d:%02d", seconds / 60, seconds % 60)
         rootItem.attributedTitle = monospaceMenuTitle(title)
-        
+
         
         if let button = rootItem.button {
-            let image = makeClockImage()
+            let p = Double(seconds) / (pomodoroTimer.stage.rawValue * 60.0)
+            let image = makeClockImage(height: 18, progress: p)
             button.image = image
             button.alternateImage = image
         }
