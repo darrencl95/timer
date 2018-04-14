@@ -55,22 +55,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let image = NSImage.init(size: NSMakeSize(width * 1.2, height))
         image.lockFocus {
-            NSColor.textColor.set()
+            NSColor.controlTextColor.set()
             
             let path = NSBezierPath.init()
             let center = NSMakePoint(width/2, height/2)
             
-            let end = CGFloat(90.0 + 360.0 * progress)
+            let radius = width * 0.4
+            let end = 90.0 + CGFloat(360.0 * progress)
         
             path.move(to: center)
             path.appendArc(withCenter: center,
-                           radius: width * 0.4, startAngle: 90, endAngle: end, clockwise: true)
+                           radius: radius, startAngle: 90, endAngle: end, clockwise: true)
             path.line(to: center)
             path.fill()
 
-            path.move(to: center)
-            path.appendArc(withCenter: center, radius: width * 0.4, startAngle: 0, endAngle: 360)
-            path.lineWidth = 2
+            path.move(to: NSMakePoint(center.x + radius, center.y))
+            path.appendArc(withCenter: center, radius: radius, startAngle: 0, endAngle: 360)
+            path.lineWidth = 1
             path.stroke()
         }
         
