@@ -1,5 +1,4 @@
 import XCTest
-
 @testable import Timer
 
 class PomodoroTimerTests: XCTestCase {
@@ -21,5 +20,11 @@ class PomodoroTimerTests: XCTestCase {
         let timer = PomodoroTimer.init()
         let newStage = timer.update(date: Date.init(timeIntervalSinceNow: 10 * 60.0))
         XCTAssertEqual(newStage, PomodoroTimer.Stage.Work)
+    }
+
+    func testUpdateWithStageChange() {
+        let timer = PomodoroTimer.init()
+        let newStage = timer.update(date: Date.init(timeIntervalSinceNow: 26 * 60.0))
+        XCTAssertEqual(newStage, PomodoroTimer.Stage.ShortBreak)
     }
 }
