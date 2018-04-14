@@ -1,6 +1,7 @@
 osx_image: xcode9.2
 language: objective-c
 
+# https://github.com/travis-ci/travis-ci/issues/7075
 script:
     - xcodebuild clean build test -scheme Timer -only-testing:TimerTests -enableCodeCoverage YES -derivedDataPath DerivedData clean build test
     - xcrun llvm-cov report -instr-profile=$(find DerivedData/Build/ -name 'Coverage.profdata') DerivedData/Build/Products/Debug/Timer.app/Contents/MacOS/Timer
