@@ -8,6 +8,7 @@ class PomodoroTimer {
     private(set) var since: Date
     private var secondsTillNextStage: Double
     private(set) var stage: Stage
+    private(set) var workCount: Int
     
     let MINUTES = 60.0
     
@@ -15,6 +16,7 @@ class PomodoroTimer {
         since = Date.init()
         stage = Stage.Work
         secondsTillNextStage = 25 * MINUTES
+        workCount = 0
     }
     
     func switchTo(_ stage: Stage, since: Date) {
@@ -30,7 +32,13 @@ class PomodoroTimer {
 
             switch stage {
             case .Work:
-                switchTo(Stage.ShortBreak, since: now)
+                workCount += 1
+                if workCount == 4 {
+                    switchTo(Stage.LongBreak, since: now)
+                    workCount = 0
+                } else {
+                    switchTo(Stage.ShortBreak, since: now)
+                }
             case .ShortBreak, .LongBreak:
                 switchTo(Stage.Work, since: now)
             }
