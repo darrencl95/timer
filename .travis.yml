@@ -12,4 +12,5 @@ deploy:
     secure: mmaAS9xdgHLrVz5EGqAyBuVvve7OLHnHVxv26JqHEonZ8Ob+CZglZhdeeiY8LSg0EV2dUMiV98ZFHohLMGGy+3CTwrRheJjhj8s6Jo8sZUgyLxZ+wERCdoe5He3AmO5hU95qQZTZ948fOa2Kaoiw9XYYI3z6IXT1+wBIXVS0Dgrvy6V/r5igzq9lrBQNZcXkkBTncT5z0RbuWlQ9Mp6aPgSB2iYe1z9hed72ok/U619SpGRb1OwrSGaGy/spBYGPbLI6z2K+x/oDUL5Pu3lxchodfMLPSSyPB0pjutPRscGyVW8gVbu0AqDH6cj4nN3Mazci6ZvG6QW0+Mlz5ejtjf4k4NNvKFIolqJ6yE/DwSD2b3b3Jw1EMgtMlNqLdDz2IEZ8pJjHfeVPn2js5e3RPPkvyLpgAQ5S1UDJvR8am3tc1X56N0eGDG6h8jVfA3ap3WYacGz0RK6MALOE1iEg1cN+JF/AtpClywv6Fbdc5QYBH7NZkTUDb+Envq+dolnNCy3cCEGsy71/7nPXqnYQ1WBXonzJjIw+QkMjwPUmfln7u+i46W4UJbznQwVzH4Ct8TE3nES+zelL6uLInDfLuzxqSrC5Je1IzforRbOIykEWxztxHAXIA/MxDty8QfLruj07bgtgTK/SxjND6cGxgc3/RI6FjYl1J97WEkLMQjc=
   file: DerivedData/Build/Products/Debug/Timer.app.zip
   on:
-    branch: master
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^master$
