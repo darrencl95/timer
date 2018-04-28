@@ -6,6 +6,7 @@ script:
 - xcrun llvm-cov report -instr-profile=$(find DerivedData/Build/ -name 'Coverage.profdata')
   DerivedData/Build/Products/Debug/Timer.app/Contents/MacOS/Timer
 - cd DerivedData/Build/Products/Debug; zip -r Timer.app.zip Timer.app
+- cd -
 deploy:
   provider: releases
   skip_cleanup: false
