@@ -31,38 +31,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                      selector: #selector(update(timer:)),
                                      userInfo: nil,
                                      repeats: true)
-        timer.fire()
-
         pomodoroTimer.switchTo(PomodoroTimer.Stage.Work, since: Date.init())
     }
 
     @IBAction func resetOrStopTimerAction(_ sender: NSMenuItem) {
-        if timer.isValid {
-            stop(nil)
+        if timer != nil && timer.isValid {
+            stopAction(nil)
         } else {
             resetTimer()
         }
         
         updateMenu()
     }
-    
-    @IBAction func stop(_ sender: NSButton?) {
-        timer.invalidate()
-        updateTimer()
+
+    @IBAction func stopAction(_ sender: NSButton?) {
+        stopTimer()
         updateMenu()
         window!.setIsVisible(false)
         rootItem.attributedTitle = NSAttributedString.init(string: "")
     }
     
-    @IBAction func quit(_ sender: NSMenuItem) {
+    @IBAction func quitAction(_ sender: NSMenuItem) {
         let app = NSApplication.shared
         app.terminate(self)
     }
+
+    func stopTimer() {
+        if timer != nil {
+            timer.invalidate()
+            timer = nil
+        }
+    }
     
-    func updateTimer() {
+    @objc func update(timer: Timer) {
         let now = Date.init()
         let newStage = pomodoroTimer.update(date: now)
-        
         window!.setIsVisible(newStage != .Work)
         
         let seconds = pomodoroTimer.countDownTillNextStage(date: now)
@@ -71,13 +74,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         label.stringValue = String.init(format: "%02d:%02d", seconds / 60, seconds % 60)
     }
     
-    @objc func update(timer: Timer) {
-        updateTimer()
-    }
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self,
-                                          selector: #selector(update(timer:)), userInfo: nil, repeats: true)
+        resetTimer()
 
         rootItem.title = ""
         rootItem.menu = statusMenu
@@ -113,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updateMenu() {
-        if timer.isValid {
+        if timer != nil && timer.isValid {
             resetOrStopItem.title = "Stop Pomodoro"
         } else {
             resetOrStopItem.title = "Start Pomodoro"

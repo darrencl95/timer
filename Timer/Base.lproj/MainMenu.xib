@@ -52,7 +52,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="stop:" target="Voe-Tx-rLC" id="4Rq-R1-uwn"/>
+                                    <action selector="stopAction:" target="Voe-Tx-rLC" id="jQ8-jB-BCM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -72,7 +72,7 @@
                 <menuItem title="Quit" id="NzJ-ma-Cel">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quit:" target="Voe-Tx-rLC" id="0BD-0e-BII"/>
+                        <action selector="quitAction:" target="Voe-Tx-rLC" id="Qwb-AW-nKK"/>
                     </connections>
                 </menuItem>
             </items>
