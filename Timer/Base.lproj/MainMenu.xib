@@ -16,6 +16,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Timer" customModuleProvider="target">
             <connections>
                 <outlet property="label" destination="giP-wQ-Zz9" id="Ucg-I7-Uer"/>
+                <outlet property="resetOrStopItem" destination="p49-Su-aNM" id="uNb-Qg-CAH"/>
                 <outlet property="statusMenu" destination="kTU-Mf-8eF" id="fNd-Et-xqp"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -25,7 +26,7 @@
             <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -43,6 +44,17 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NUJ-mG-PAk">
+                                <rect key="frame" x="206" y="13" width="69" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="svs-1j-mwK">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="stop:" target="Voe-Tx-rLC" id="4Rq-R1-uwn"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </visualEffectView>
                 </subviews>
@@ -50,8 +62,11 @@
         </window>
         <menu id="kTU-Mf-8eF">
             <items>
-                <menuItem title="Start Pomodoro" id="p49-Su-aNM">
+                <menuItem title="Start/Stop Pomodoro" id="p49-Su-aNM">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="resetOrStopTimerAction:" target="Voe-Tx-rLC" id="tff-M0-q0Q"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="6rZ-Xx-FDx"/>
                 <menuItem title="Quit" id="NzJ-ma-Cel">
